@@ -5,7 +5,7 @@
  * Email: elmanislam123@gmail.com
  * 
  * Creation Date: 2024-10-14 20:51:28
- Last Modification Date: 2024-10-14 21:15:22
+ Last Modification Date: 2024-10-15 15:51:00
  * 
  */
 
@@ -49,5 +49,14 @@ public class PrimeNumbers implements Iterable<Integer> {
    @Override
    public String toString() {
       return primes.toString();
+   }
+
+   public static void main(String[] argv) {
+      PrimeNumbers primes = new PrimeNumbers();
+      primes.computePrimes(8);
+      System.out.println("Primes: " + primes);
+
+      Iterator<Integer> itr = primes.iterator();
+      System.out.println("First prime: " + itr.next());
    }
 }
