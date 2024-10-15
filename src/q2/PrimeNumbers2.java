@@ -4,20 +4,22 @@
  Email: elmanislam123@gmail.com
 
  Creation Date: 2024-10-15 15:45:44
- Last Modification Date: 2024-10-15 15:50:05
+ Last Modification Date: 2024-10-15 16:04:00
 
  
 
 */
 
+package q2;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class PrimeNumbers implements Iterable<Integer> {
+public class PrimeNumbers2 implements Iterable<Integer> {
    private List<Integer> primes = new ArrayList<Integer>();
 
-   public PrimeNumbers() {
+   public PrimeNumbers2() {
       // Constructor logic (if any)
    }
 
@@ -50,5 +52,14 @@ public class PrimeNumbers implements Iterable<Integer> {
    @Override
    public String toString() {
       return primes.toString();
+   }
+
+   public static void main(String[] argv) {
+      PrimeNumbers2 primes = new PrimeNumbers2();
+      primes.computePrimes(8);
+      System.out.println("Primes: " + primes);
+
+      Iterator<Integer> itr = primes.iterator();
+      System.out.println("First prime: " + itr.next());
    }
 }
