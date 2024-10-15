@@ -9,56 +9,38 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 @RunWith(Parameterized.class)
-public class MinTest {
+public class MinTest<T extends Comparable<? super T>> {
 
-    private List<?> list;                // The list of input values (either Integer or String)
-    private Object expectedResult;       // The expected minimum value or null if an error is expected
+    private List<T> list;                // The list of input values (either Integer or String)
+    private T expectedResult;            // The expected minimum value or null if an error is expected
     private Class<? extends Throwable> expectedException; // The expected exception class, or null if no exception
 
     // Constructor for the parameterized test cases
-    public MinTest(List<?> list, Object expectedResult, Class<? extends Throwable> expectedException) {
+    public MinTest(List<T> list, T expectedResult, Class<? extends Throwable> expectedException) {
         this.list = list;
         this.expectedResult = expectedResult;
         this.expectedException = expectedException;
     }
 
-    // This is the method that provides the test data (with passes, failures, and errors)
+    // This method provides the test data (with passes, failures, and errors)
     @Parameterized.Parameters
     public static Collection<Object[]> provideTestData() {
         return Arrays.asList(new Object[][]{
             // Integer test cases
 
-            // Case 1: Normal integer list, expected to pass, min = 1
-            {Arrays.asList(3, 1, 4, 1, 5, 9), 1, null}, // Pass
-
-            // Case 2: Integer list with a single element, expected to pass, min = 7
-            {Arrays.asList(7), 7, null}, // Pass
-
-            // Case 3: Integer list in reverse order, expected to pass, min = -10
-            {Arrays.asList(9, 5, 0, -10), -10, null}, // Pass
-
-            // Case 4: Empty integer list, expected to throw IllegalArgumentException
-            {Arrays.asList(), null, IllegalArgumentException.class}, // Error
-
-            // Case 5: Integer list with null elements, expected to throw NullPointerException
-            {Arrays.asList(5, null, 2), null, NullPointerException.class}, // Error
-
-            // Case 6: Integer list where expected value is wrong (expected failure), min is 1, but we expect 2
-            {Arrays.asList(3, 1, 4), 2, null}, // Failure
+            {Arrays.asList(3, 1, 4, 1, 5, 9), 1, null}, // Test Case 1: Normal integer list, expected minimum = 1 (Pass)
+            {Arrays.asList(7), 7, null}, // Test Case 2: Single element list, expected minimum = 7 (Pass)
+            {Arrays.asList(9, 5, 0, -10), -10, null}, // Test Case 3: Integer list in reverse order, expected minimum = -10 (Pass)
+            {Arrays.asList(), null, IllegalArgumentException.class}, // Test Case 4: Empty list, expected to throw IllegalArgumentException (Error)
+            {Arrays.asList(5, null, 2), null, NullPointerException.class}, // Test Case 5: List with null element, expected to throw NullPointerException (Error)
+            {Arrays.asList(3, 1, 4), 2, null}, // Test Case 6: Incorrect expected value (2 instead of 1), expected to fail (Failure)
 
             // String test cases
 
-            // Case 7: Normal string list, expected to pass, min = "apple"
-            {Arrays.asList("banana", "apple", "cherry"), "apple", null}, // Pass
-
-            // Case 8: String list with a single element, expected to pass, min = "zebra"
-            {Arrays.asList("zebra"), "zebra", null}, // Pass
-
-            // Case 9: Empty string list, expected to throw IllegalArgumentException
-            {Arrays.asList(), null, IllegalArgumentException.class}, // Error
-
-            // Case 10: String list where expected value is wrong (expected failure), min is "apple", but we expect "banana"
-            {Arrays.asList("banana", "apple", "cherry"), "banana", null} // Failure
+            {Arrays.asList("brad", "adam", "chris"), "adam", null}, // Test Case 7: Normal string list, expected minimum = "adam" (Pass)
+            {Arrays.asList("zach"), "zach", null}, // Test Case 8: Single string element, expected minimum = "zach" (Pass)
+            {Arrays.asList(), null, IllegalArgumentException.class}, // Test Case 9: Empty string list, expected to throw IllegalArgumentException (Error)
+            {Arrays.asList("brad", "adam", "chris"), "brad", null} // Test Case 10: Incorrect expected value ("banana" instead of "apple"), expected to fail (Failure)
         });
     }
 
@@ -68,14 +50,15 @@ public class MinTest {
         if (expectedException != null) {
             // Test is expected to throw an exception
             try {
-                Min.min(list);
+                Min.min(list); // Call the method to test
                 fail("Expected exception: " + expectedException.getName()); // Fail if no exception is thrown
             } catch (Throwable ex) {
-                assertTrue(expectedException.isInstance(ex)); // Check if the correct exception is thrown
+                // Check if the correct exception is thrown
+                assertTrue(expectedException.isInstance(ex)); // Verify the type of exception thrown matches the expected exception
             }
         } else {
             // Test is expected to pass normally
-            assertEquals(expectedResult, Min.min(list)); // Check if the expected result matches the actual result
+            assertEquals(expectedResult, Min.min(list)); // Check if the expected result matches the actual result from Min.min
         }
     }
 }
