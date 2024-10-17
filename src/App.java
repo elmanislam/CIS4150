@@ -3,7 +3,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import q1.PrimeNumbers;
-import q2.PrimeNumbers2;
 
 public class App {
    public static void main(String[] args) throws Exception {
